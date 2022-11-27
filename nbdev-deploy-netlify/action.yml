@@ -1,0 +1,23 @@
+name: "nbdev-deploy-netlify"
+description: "Test and deploy nbdev to Netlify"
+runs:
+  using: "composite"
+  steps: 
+    - name: Nbdev ci
+      uses: fastai/workflows/nbdev-ci@master
+    
+    - name: Preprocess nbdev
+      run: nbdev_proc_nbs
+      shell: bash
+
+    - name: Copy _publish.yml
+      run: cp nbs/_publish.yml _proc/
+      shell: bash
+
+    - name: Netlify Deploy
+      uses: quarto-dev/quarto-actions/publish@v2
+      with:
+        target: netlify
+        render: true
+        path: _proc
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
