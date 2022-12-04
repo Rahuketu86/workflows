@@ -1,0 +1,72 @@
+name: "jb-deploy-netlify"
+description: "Deploy jupyterbook on netlify after installing inside or outside nbdev library"
+inputs:
+  book_folder:
+    description: 'Location of jupyter book folder relative to repo'
+    required: true
+
+  is_inside_nbdev:
+    description: 'Is this inside an nbdev library'
+    required: true
+    type: boolean
+
+  requirements:
+    description: 'Provide requirements file'
+    default: 'requirements.txt'
+
+
+  NETLIFY_AUTH_TOKEN:
+    description: 'NETLIFY AUTH TOKEN'
+    required: true
+
+  NETLIFY_SITE_ID:
+    description: 'NETLIFY SITE ID'
+    required: true
+
+  GITHUB_TOKEN:
+    description: 'GITHUB TOKEN'
+    required: true
+
+runs:
+  using: "composite"
+  steps: 
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    
+    - name: Setup Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.9
+        cache: "pip"
+        cache-dependency-path: ${{ inputs.requirements }}
+
+    - name: Install nbdev library
+      if: ${{ inputs.is_inside_nbdev }}
+      run: |
+        pip install -e .
+      shell: bash
+
+    - name: Install additional book requirements
+      run: |
+        pip install -r ${{ inputs.requirements }}
+      shell: bash
+
+    - name: Build the book
+      run: |
+        jupyter-book build ${{ inputs.book_folder }}
+      shell: bash
+
+    - name: Netlify Deploy
+      uses: nwtgck/actions-netlify@v1.2
+      with:
+        publish-dir: ./${{ inputs.book_folder }}/_build/html
+        production-branch: master
+        github-token: ${{ inputs.GITHUB_TOKEN }}
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: false
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ inputs.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ inputs.NETLIFY_SITE_ID }}
+      timeout-minutes: 1
