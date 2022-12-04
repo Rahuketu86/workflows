@@ -13,6 +13,10 @@ inputs:
   requirements:
     description: 'Provide requirements file'
     default: 'requirements.txt'
+    
+  PYTHON_VERSION:
+    description: 'Python version for jupyterbook'
+    default: '3.6'
 
   NETLIFY_AUTH_TOKEN:
     description: 'NETLIFY AUTH TOKEN'
@@ -35,7 +39,7 @@ runs:
     - name: Setup Python
       uses: actions/setup-python@v3
       with:
-        python-version: 3.9
+        python-version: ${{ inputs.PYTHON_VERSION }}
         cache: "pip"
         cache-dependency-path: ${{ inputs.book_folder }}/${{ inputs.requirements }}
 
