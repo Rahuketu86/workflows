@@ -68,4 +68,3 @@ runs:
       env:
         NETLIFY_AUTH_TOKEN: ${{ inputs.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ inputs.NETLIFY_SITE_ID }}
-      timeout-minutes: 1
