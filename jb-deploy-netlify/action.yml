@@ -37,7 +37,7 @@ runs:
       with:
         python-version: 3.9
         cache: "pip"
-        cache-dependency-path: ${{ inputs.requirements }}
+        cache-dependency-path: ${{ inputs.book_folder }}/${{ inputs.requirements }}
 
     - name: Install nbdev library
       if: ${{ inputs.is_inside_nbdev }}
@@ -47,7 +47,7 @@ runs:
 
     - name: Install additional book requirements
       run: |
-        pip install -r ${{ inputs.requirements }}
+        pip install -r ${{ inputs.book_folder }}/${{ inputs.requirements }}
       shell: bash
 
     - name: Build the book
