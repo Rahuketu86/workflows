@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: true  
 
 
-# This job installs dependencies, builds the book, and pushes it to `gh-pages`
+# This job installs dependencies, builds the book, and pushes it to `netlify`
 jobs:
   deploy-book:
     runs-on: ubuntu-latest
