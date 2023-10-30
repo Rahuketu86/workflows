@@ -1,4 +1,4 @@
-Runs nbdev-ci and deploys to netlify
+Runs nbdev-ci and deploys to private
 
 Usage:
 ```
