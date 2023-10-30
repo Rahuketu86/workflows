@@ -3,6 +3,11 @@ Runs nbdev-ci and deploys to netlify
 Usage:
 ```
 name: CI
+
+permissions:
+  contents: write
+  pages: write
+  
 on:
   push:
     branches: [ "main", "master" ]
