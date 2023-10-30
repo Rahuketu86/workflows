@@ -23,6 +23,7 @@ runs:
         cat << 'EOF' >> email_list.txt
         rahuketu86@gmail.com
         rahul.sarafiitk@gmail.com
+        EOF
 
     - name: Create DockerFile
       working-directory: ./_docs
@@ -40,6 +41,7 @@ runs:
                     "--cookie-expire=0h0m30s", \
                     "--session-cookie-minimal=true", \
                     "--skip-provider-button=true"]
+        EOF
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
