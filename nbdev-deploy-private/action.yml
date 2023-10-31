@@ -1,5 +1,5 @@
-name: "nbdev-deploy-netlify"
-description: "Test and deploy nbdev to Netlify"
+name: "nbdev-deploy-private"
+description: "Test and deploy nbdev to private"
 inputs:
   ghtoken:
     description: 'GitHub token'
