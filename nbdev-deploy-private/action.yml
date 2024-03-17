@@ -42,6 +42,27 @@ runs:
                     "--session-cookie-minimal=true", \
                     "--skip-provider-button=true"]
         EOF
+        
+    - name: Create Render file
+      working-directory: ./_docs
+      shell: bash
+      run: |
+        cat << 'EOF' >> render.yaml
+        services:
+          - type: web
+            name: oauth2-proxy-render
+            plan: free
+            env: docker
+            envVars:
+              - key: OAUTH2_PROXY_CLIENT_ID
+                sync: false
+              - key: OAUTH2_PROXY_CLIENT_SECRET
+                sync: false
+              - key: OAUTH2_PROXY_COOKIE_SECRET
+                generateValue: true
+              - key: OAUTH2_PROXY_HTTP_ADDRESS
+                value: ":10000"
+        EOF
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
