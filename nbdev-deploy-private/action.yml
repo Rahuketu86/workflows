@@ -16,6 +16,27 @@ runs:
       run: nbdev_docs
       shell: bash
 
+    - name: Execute post processing python scripts in tools
+      run: |
+        if [ ! -d "tools" ]; then
+          echo "Tools directory does not exist, skipping execution."
+          exit 1
+        else
+          cd tools
+          python_files=$(find . -type f -name "*.py")
+          # Check if there are any Python files
+          if [ -n "$python_files" ]; then
+              echo "Running Python files in tools directory..."
+              # Loop through each Python file and run it
+              for file in $python_files; do
+                  echo "Running $file..."
+                  python "$file"
+              done
+          else
+              echo "No Python files found in tools directory"
+          fi
+        fi
+
     - name: Create Email List
       working-directory: ./_docs
       shell: bash
