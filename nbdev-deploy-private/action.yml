@@ -36,6 +36,7 @@ runs:
               echo "No Python files found in tools directory"
           fi
         fi
+      shell: bash
 
     - name: Create Email List
       working-directory: ./_docs
