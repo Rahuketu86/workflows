@@ -17,6 +17,7 @@ runs:
       shell: bash
 
     - name: Execute post processing python scripts in tools
+      shell: bash
       run: |
         if [ ! -d "tools" ]; then
           echo "Tools directory does not exist, skipping execution."
@@ -36,7 +37,7 @@ runs:
               echo "No Python files found in tools directory"
           fi
         fi
-      shell: bash
+      
 
     - name: Create Email List
       working-directory: ./_docs
